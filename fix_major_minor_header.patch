@@ -1,0 +1,30 @@
+diff -rup a/configure.ac b/configure.ac
+--- a/configure.ac	2018-10-16 14:39:35.955080876 +0800
++++ b/configure.ac	2018-10-16 15:46:06.506667394 +0800
+@@ -4,6 +4,7 @@ AM_INIT_AUTOMAKE
+ AM_MAINTAINER_MODE
+ AM_CONFIG_HEADER(config.h)
+ 
++AC_HEADER_MAJOR
+ AC_PROG_CC
+ AC_PROG_INSTALL
+ # AC_PROG_LIBTOOL
+diff -rup a/src/lsscsi.c b/src/lsscsi.c
+--- a/src/lsscsi.c	2018-10-16 14:39:35.955080876 +0800
++++ b/src/lsscsi.c	2018-10-16 15:46:36.317664305 +0800
+@@ -33,6 +33,15 @@
+ #define __STDC_FORMAT_MACROS 1
+ #include <inttypes.h>
+ 
++#include "config.h"
++/* major()/minor() */
++#ifdef MAJOR_IN_MKDEV
++#include <sys/mkdev.h>
++#endif
++#ifdef MAJOR_IN_SYSMACROS
++#include <sys/sysmacros.h>
++#endif
++
+ static const char * version_str = "0.28  2014/09/30 [svn: r120]";
+ 
+ #define FT_OTHER 0
